@@ -1,0 +1,189 @@
+﻿<UserControl x:Class="NaMidia.RELATORIOS.RelatorioPagamentoVendaUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             x:Name="ucRelatorioPagamentoVenda">
+
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Disabled">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Background="#25a0da"
+                    BorderBrush="#ff0078ab"
+                    BorderThickness="1"
+                    VerticalAlignment="Top"
+                    Margin="10 5 10 5"
+                    Grid.Row="0">
+
+                <Label Content="Relatório de Pagamentos"
+                       FontSize="18"
+                       FontFamily="Calibri"
+                       FontWeight="ExtraLight"
+                       FontStyle="Italic"
+                       Foreground="#ffffff"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="5 0 0 0" />
+
+            </Border>
+
+            <GroupBox x:Name="gbCadastrados"
+                      Header="Pagamentos Cadastrados"
+                      BorderBrush="#25a0da"
+                      Margin="10 0 10 10"
+                      Style="{StaticResource EstiloGroupBox}"
+                      Grid.Row="1">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition x:Name="rGridView"
+                                       Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <telerik:RadDataPager PageSize="{Binding LinhasGridView, ElementName= ucRelatorioPagamentoVenda}"
+                                          Margin="5 2 5 0"
+                                          Grid.Column="0"
+                                          Grid.Row="0"
+                                          Source="{Binding Items, ElementName=dtPagamentoVenda}"
+                                          IsTotalItemCountFixed="True"
+                                          DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                          telerik:StyleManager.Theme="Windows8" />
+
+                    <Button x:Name="btnImprimir"
+                            ToolTip="Clique para imprimir"
+                            IsEnabled="True"
+                            Style="{DynamicResource botaoImprimir}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="5 2 5 2"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Click="btnImprimir_Click" />
+
+                    <telerik:RadGridView x:Name="dtPagamentoVenda"
+                                         IsReadOnly="True"
+                                         Margin="5 2 5 5"
+                                         Grid.Column="0"
+                                         Grid.Row="1"
+                                         Grid.ColumnSpan="2"
+                                         AutoGenerateColumns="False"
+                                         ItemsSource="{Binding ListaPagamentosVenda, ElementName=ucRelatorioPagamentoVenda}"
+                                         Style="{DynamicResource EstiloGrid}"
+                                         telerik:StyleManager.Theme="Windows8"
+                                         SelectionChanged="dtPagamentoVenda_SelectionChanged"
+                                         RowDetailsVisibilityChanging="dtPagamentoVenda_RowDetailsVisibilityChanging">
+
+                        <telerik:RadGridView.GroupDescriptors>
+                            <telerik:GroupDescriptor Member="nm_Fantasia"
+                                                     SortDirection="Ascending"
+                                                     DisplayContent="Cliente" />
+                        </telerik:RadGridView.GroupDescriptors>
+
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewToggleRowDetailsColumn />
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Código"
+                                                        DataMemberBinding="{Binding cd_Venda}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Cliente"
+                                                        DataMemberBinding="{Binding nm_Fantasia}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Contato"
+                                                        DataMemberBinding="{Binding nm_Pessoa}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Valor da Parcela"
+                                                        DataMemberBinding="{Binding ds_ValorParcela,StringFormat='R$ ##,##0.00'}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Tipo de Reajuste"
+                                                        DataMemberBinding="{Binding ds_Reajuste}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Valor do Reajuste"
+                                                        DataMemberBinding="{Binding ds_ValorReajuste,StringFormat='R$ ##,##0.00'}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Valor da Parcela c/ Reajuste"
+                                                        DataMemberBinding="{Binding ds_ValorReajustado,StringFormat='R$ ##,##0.00'}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Valor Recebido"
+                                                        DataMemberBinding="{Binding ds_ValorRecebido,StringFormat='R$ ##,##0.00'}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Valor Restante"
+                                                        DataMemberBinding="{Binding ds_ValorRestante,StringFormat='R$ ##,##0.00'}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Data da Venda"
+                                                        DataMemberBinding="{Binding dt_Data, StringFormat={}{0:dd/MM/yyyy}}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Data do Pagamento (Previsto)"
+                                                        DataMemberBinding="{Binding dt_Pagamento_Prevista, StringFormat={}{0:dd/MM/yyyy}}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Data do Pagamento (Realizado)"
+                                                        DataMemberBinding="{Binding dt_Pagamento_Efetuado, StringFormat={}{0:dd/MM/yyyy}}" />
+
+                        </telerik:RadGridView.Columns>
+
+                        <telerik:RadGridView.RowDetailsTemplate>
+                            <DataTemplate>
+                                <telerik:RadGridView x:Name="dtParcela"
+                                                     Width="500"
+                                                     Margin="5 2 5 5"
+                                                     HorizontalAlignment="Left"
+                                                     CanUserDeleteRows="False"
+                                                     IsReadOnly="True"
+                                                     AutoGenerateColumns="False"
+                                                     ShowGroupPanel="False"
+                                                     Style="{DynamicResource EstiloGrid}"
+                                                     telerik:StyleManager.Theme="Windows8"
+                                                     Loaded="dtParcela_Loaded">
+
+                                    <telerik:RadGridView.Columns>
+                                        <telerik:GridViewDataColumn  Width="*"
+                                                                     Header="Código"
+                                                                     DataMemberBinding="{Binding cd_PagamentoVendaRegistros}" />
+
+                                        <telerik:GridViewDataColumn  Width="*"
+                                                                     Header="Valor Pago"
+                                                                     DataMemberBinding="{Binding ds_ValorPagamento,StringFormat='R$ ##,##0.00'}" />
+
+                                        <telerik:GridViewDataColumn Width="*"
+                                                                    Header="Data do Pagamento"
+                                                                    DataMemberBinding="{Binding dt_Pagamento, StringFormat={}{0:dd/MM/yyyy}}">
+                                        </telerik:GridViewDataColumn>
+                                    </telerik:RadGridView.Columns>
+
+                                </telerik:RadGridView>
+                            </DataTemplate>
+                        </telerik:RadGridView.RowDetailsTemplate>
+
+                    </telerik:RadGridView>
+
+                </Grid>
+
+            </GroupBox>
+
+        </Grid>
+
+    </ScrollViewer>
+
+</UserControl>

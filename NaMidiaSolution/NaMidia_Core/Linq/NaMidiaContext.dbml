@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="NaMidia" Class="NaMidiaContextDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=not-rodrigo\sqlexpress;Initial Catalog=NaMidia;User ID=sa" SettingsObjectName="NaMidia.Properties.Settings" SettingsPropertyName="NaMidiaConnectionString1" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.CARGO" Member="CARGOs">
+    <Type Name="CARGO">
+      <Column Name="cd_Cargo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Cargo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="CARGO_FUNCIONARIO" Member="FUNCIONARIOs" ThisKey="cd_Cargo" OtherKey="cd_Cargo" Type="FUNCIONARIO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VERSAO" Member="VERSAOs">
+    <Type Name="VERSAO">
+      <Column Name="cd_Versao" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Versao" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CIDADE" Member="CIDADEs">
+    <Type Name="CIDADE">
+      <Column Name="cd_Cidade" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_Cidade" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cd_Estado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="CIDADE_COSTUREIRA" Member="COSTUREIRAs" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="COSTUREIRA" />
+      <Association Name="CIDADE_FUNCIONARIO" Member="FUNCIONARIOs" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="FUNCIONARIO" />
+      <Association Name="CIDADE_PESSOA" Member="PESSOAs" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="PESSOA" />
+      <Association Name="CIDADE_FORNECEDOR" Member="FORNECEDORs" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="FORNECEDOR" />
+      <Association Name="UF_CIDADE" Member="UF" ThisKey="cd_Estado" OtherKey="cd_Uf" Type="UF" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CONTATO" Member="CONTATOs">
+    <Type Name="CONTATO">
+      <Column Name="cd_Contato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Pessoa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_TipoContato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Contato" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="PESSOA_CONTATO" Member="PESSOA" ThisKey="cd_Pessoa" OtherKey="cd_Pessoa" Type="PESSOA" IsForeignKey="true" />
+      <Association Name="TIPOCONTATO_CONTATO" Member="TIPOCONTATO" ThisKey="cd_TipoContato" OtherKey="cd_TipoContato" Type="TIPOCONTATO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CONTATOCOSTUREIRA" Member="CONTATOCOSTUREIRAs">
+    <Type Name="CONTATOCOSTUREIRA">
+      <Column Name="cd_ContatoCostureira" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Costureira" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Contato" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cd_TipoContato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="COSTUREIRA_CONTATOCOSTUREIRA" Member="COSTUREIRA" ThisKey="cd_Costureira" OtherKey="cd_Costureira" Type="COSTUREIRA" IsForeignKey="true" />
+      <Association Name="TIPOCONTATO_CONTATOCOSTUREIRA" Member="TIPOCONTATO" ThisKey="cd_TipoContato" OtherKey="cd_TipoContato" Type="TIPOCONTATO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.COSTUREIRA" Member="COSTUREIRAs">
+    <Type Name="COSTUREIRA">
+      <Column Name="cd_Costureira" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_Costureira" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Endereco" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ds_Numero" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="ds_Bairro" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cd_Cidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Cpf" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ds_Rg" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="nm_Fantasia" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="COSTUREIRA_CONTATOCOSTUREIRA" Member="CONTATOCOSTUREIRAs" ThisKey="cd_Costureira" OtherKey="cd_Costureira" Type="CONTATOCOSTUREIRA" />
+      <Association Name="COSTUREIRA_COSTUREIRAPEDIDO" Member="COSTUREIRAPEDIDOs" ThisKey="cd_Costureira" OtherKey="cd_Costureira" Type="COSTUREIRAPEDIDO" />
+      <Association Name="CIDADE_COSTUREIRA" Member="CIDADE" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="CIDADE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.COSTUREIRAPEDIDO" Member="COSTUREIRAPEDIDOs">
+    <Type Name="COSTUREIRAPEDIDO">
+      <Column Name="cd_CostureiraPedido" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Costureira" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Quantidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_ValorUnit" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorTotal" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_Data" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="statusPagamento" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="cd_ItensVenda" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_DataPagamento" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="COSTUREIRA_COSTUREIRAPEDIDO" Member="COSTUREIRA" ThisKey="cd_Costureira" OtherKey="cd_Costureira" Type="COSTUREIRA" IsForeignKey="true" />
+      <Association Name="ITENSVENDA_COSTUREIRAPEDIDO" Member="ITENSVENDA" ThisKey="cd_ItensVenda" OtherKey="cd_ItensVenda" Type="ITENSVENDA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FORMAPAGAMENTO" Member="FORMAPAGAMENTOs">
+    <Type Name="FORMAPAGAMENTO">
+      <Column Name="cd_FormaPagamento" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_FormaPagamento" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Association Name="FORMAPAGAMENTO_VENDA" Member="VENDAs" ThisKey="cd_FormaPagamento" OtherKey="cd_FormaPagamento" Type="VENDA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FUNCIONARIO" Member="FUNCIONARIOs">
+    <Type Name="FUNCIONARIO">
+      <Column Name="cd_Funcionario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_Funcionario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Endereco" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ds_Numero" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ds_Bairro" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="cd_Cidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Telefone" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ds_Email" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ds_Cpf" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ds_Rg" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="cd_Cargo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Salario" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="dt_Entrada" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dt_Saida" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ds_Imagem" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="statusFuncionario" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="FUNCIONARIO_LOGIN" Member="LOGINs" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="LOGIN" />
+      <Association Name="FUNCIONARIO_LOGIN1" Member="LOGINs1" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="LOGIN" />
+      <Association Name="FUNCIONARIO_PAGAMENTOVENDASREGISTRO" Member="PAGAMENTOVENDASREGISTROs" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="PAGAMENTOVENDASREGISTRO" />
+      <Association Name="FUNCIONARIO_VENDA" Member="VENDAs" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="VENDA" />
+      <Association Name="CIDADE_FUNCIONARIO" Member="CIDADE" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="CIDADE" IsForeignKey="true" />
+      <Association Name="CARGO_FUNCIONARIO" Member="CARGO" ThisKey="cd_Cargo" OtherKey="cd_Cargo" Type="CARGO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.GOLA" Member="GOLAs">
+    <Type Name="GOLA">
+      <Column Name="cd_Gola" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Gola" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="GOLA_ITENSVENDA" Member="ITENSVENDAs" ThisKey="cd_Gola" OtherKey="cd_Gola" Type="ITENSVENDA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IMAGEMVENDA" Member="IMAGEMVENDAs">
+    <Type Name="IMAGEMVENDA">
+      <Column Name="cd_ImagemVenda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Imagem" Type="System.Data.Linq.Binary" DbType="Image" CanBeNull="true" UpdateCheck="Never" />
+      <Association Name="VENDA_IMAGEMVENDA" Member="VENDA" ThisKey="cd_Venda" OtherKey="cd_Venda" Type="VENDA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ITENSVENDA" Member="ITENSVENDAs">
+    <Type Name="ITENSVENDA">
+      <Column Name="cd_ItensVenda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Quantidade" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Produto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Tamanho" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Malha" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Gola" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ValorUnitario" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_SubTotal" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_Observacoes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="ITENSVENDA_COSTUREIRAPEDIDO" Member="COSTUREIRAPEDIDOs" ThisKey="cd_ItensVenda" OtherKey="cd_ItensVenda" Type="COSTUREIRAPEDIDO" />
+      <Association Name="GOLA_ITENSVENDA" Member="GOLA" ThisKey="cd_Gola" OtherKey="cd_Gola" Type="GOLA" IsForeignKey="true" />
+      <Association Name="MALHA_ITENSVENDA" Member="MALHA" ThisKey="cd_Malha" OtherKey="cd_Malha" Type="MALHA" IsForeignKey="true" />
+      <Association Name="TAMANHO_ITENSVENDA" Member="TAMANHO" ThisKey="cd_Tamanho" OtherKey="cd_Tamanho" Type="TAMANHO" IsForeignKey="true" />
+      <Association Name="VENDA_ITENSVENDA" Member="VENDA" ThisKey="cd_Venda" OtherKey="cd_Venda" Type="VENDA" IsForeignKey="true" />
+      <Association Name="PRODUTO_ITENSVENDA" Member="PRODUTO" ThisKey="cd_Produto" OtherKey="cd_Produto" Type="PRODUTO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOGBACKUP" Member="LOGBACKUPs">
+    <Type Name="LOGBACKUP">
+      <Column Name="cd_LogBackup" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dt_Backup" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOGIN" Member="LOGINs">
+    <Type Name="LOGIN">
+      <Column Name="cd_Login" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Funcionario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Usuario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Senha" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Perfil" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="LOGIN_PERFIL_USUARIO" Member="PERFIL_USUARIOs" ThisKey="cd_Login" OtherKey="cd_Usuario" Type="PERFIL_USUARIO" />
+      <Association Name="FUNCIONARIO_LOGIN" Member="FUNCIONARIO" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="FUNCIONARIO" IsForeignKey="true" />
+      <Association Name="FUNCIONARIO_LOGIN1" Member="FUNCIONARIO1" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="FUNCIONARIO" IsForeignKey="true" />
+      <Association Name="PERFIL_LOGIN" Member="PERFIL" ThisKey="cd_Perfil" OtherKey="cd_Perfil" Type="PERFIL" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOGPAGAMENTOVENDA" Member="LOGPAGAMENTOVENDAs">
+    <Type Name="LOGPAGAMENTOVENDA">
+      <Column Name="cd_LogPagamentoVenda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_PagamentoVenda" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dt_Edicao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ds_Operacao" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ds_Valor_Antigo" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_Valor_Atual" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="cd_PagamentoVendaRegistros" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.LOGVENDA" Member="LOGVENDAs">
+    <Type Name="LOGVENDA">
+      <Column Name="cd_LogVenda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Usuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dt_Edicao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="tp_erro" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="ds_Operacao" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MALHA" Member="MALHAs">
+    <Type Name="MALHA">
+      <Column Name="cd_Malha" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Malha" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="MALHA_ITENSVENDA" Member="ITENSVENDAs" ThisKey="cd_Malha" OtherKey="cd_Malha" Type="ITENSVENDA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PAGAMENTOVENDAS" Member="PAGAMENTOVENDAs">
+    <Type Name="PAGAMENTOVENDA">
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ValorParcela" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="dt_Pagamento_Prevista" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Pagamento_Efetuado" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="cd_PagamentoVenda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_ValorRecebido" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorRestante" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="statusPagamentoParcela" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="cd_Reajuste" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_ValorReajuste" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorReajustado" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="exibirNotificacao" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Association Name="PAGAMENTOVENDA_PAGAMENTOVENDASREGISTRO" Member="PAGAMENTOVENDASREGISTROs" ThisKey="cd_PagamentoVenda" OtherKey="cd_PagamentoVenda" Type="PAGAMENTOVENDASREGISTRO" />
+      <Association Name="REAJUSTE_PAGAMENTOVENDA" Member="REAJUSTE" ThisKey="cd_Reajuste" OtherKey="cd_Reajuste" Type="REAJUSTE" IsForeignKey="true" />
+      <Association Name="VENDA_PAGAMENTOVENDA" Member="VENDA" ThisKey="cd_Venda" OtherKey="cd_Venda" Type="VENDA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PAGAMENTOVENDASREGISTROS" Member="PAGAMENTOVENDASREGISTROs">
+    <Type Name="PAGAMENTOVENDASREGISTRO">
+      <Column Name="cd_PagamentoVendaRegistros" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_PagamentoVenda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ValorPagamento" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="dt_Pagamento" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="cd_Funcionario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Flag" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="FUNCIONARIO_PAGAMENTOVENDASREGISTRO" Member="FUNCIONARIO" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="FUNCIONARIO" IsForeignKey="true" />
+      <Association Name="PAGAMENTOVENDA_PAGAMENTOVENDASREGISTRO" Member="PAGAMENTOVENDA" ThisKey="cd_PagamentoVenda" OtherKey="cd_PagamentoVenda" Type="PAGAMENTOVENDA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PARAMETROSISTEMA" Member="PARAMETROSISTEMAs">
+    <Type Name="PARAMETROSISTEMA">
+      <Column Name="cd_ParametroSistema" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ParametroSistema" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ds_Valor" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERFIL" Member="PERFILs">
+    <Type Name="PERFIL">
+      <Column Name="cd_Perfil" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ds_Perfil" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="PERFIL_LOGIN" Member="LOGINs" ThisKey="cd_Perfil" OtherKey="cd_Perfil" Type="LOGIN" />
+      <Association Name="PERFIL_PERFIL_MODULO" Member="PERFIL_MODULOs" ThisKey="cd_Perfil" OtherKey="cd_Perfil" Type="PERFIL_MODULO" />
+      <Association Name="PERFIL_PERFIL_USUARIO" Member="PERFIL_USUARIOs" ThisKey="cd_Perfil" OtherKey="cd_Perfil" Type="PERFIL_USUARIO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PESSOA" Member="PESSOAs">
+    <Type Name="PESSOA">
+      <Column Name="cd_Pessoa" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_Pessoa" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Endereco" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ds_Numero" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="ds_Bairro" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cd_TipoPessoa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Cidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_Cep" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Cpf" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ds_Rg" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ds_Cnpj" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="nm_Fantasia" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ds_RazaoSocial" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="PESSOA_CONTATO" Member="CONTATOs" ThisKey="cd_Pessoa" OtherKey="cd_Pessoa" Type="CONTATO" />
+      <Association Name="PESSOA_VENDA" Member="VENDAs" ThisKey="cd_Pessoa" OtherKey="cd_Pessoa" Type="VENDA" />
+      <Association Name="CIDADE_PESSOA" Member="CIDADE" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="CIDADE" IsForeignKey="true" />
+      <Association Name="TIPOPESSOA_PESSOA" Member="TIPOPESSOA" ThisKey="cd_TipoPessoa" OtherKey="cd_TipoPessoa" Type="TIPOPESSOA" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.REAJUSTE" Member="REAJUSTEs">
+    <Type Name="REAJUSTE">
+      <Column Name="cd_Reajuste" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Reajuste" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Association Name="REAJUSTE_PAGAMENTOVENDA" Member="PAGAMENTOVENDAs" ThisKey="cd_Reajuste" OtherKey="cd_Reajuste" Type="PAGAMENTOVENDA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TAMANHO" Member="TAMANHOs">
+    <Type Name="TAMANHO">
+      <Column Name="cd_Tamanho" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Tamanho" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_OrdemExibicao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="TAMANHO_ITENSVENDA" Member="ITENSVENDAs" ThisKey="cd_Tamanho" OtherKey="cd_Tamanho" Type="ITENSVENDA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TIPOCONTATO" Member="TIPOCONTATOs">
+    <Type Name="TIPOCONTATO">
+      <Column Name="cd_TipoContato" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_TipoContato" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TIPOCONTATO_CONTATO" Member="CONTATOs" ThisKey="cd_TipoContato" OtherKey="cd_TipoContato" Type="CONTATO" />
+      <Association Name="TIPOCONTATO_CONTATOCOSTUREIRA" Member="CONTATOCOSTUREIRAs" ThisKey="cd_TipoContato" OtherKey="cd_TipoContato" Type="CONTATOCOSTUREIRA" />
+      <Association Name="TIPOCONTATO_CONTATOFORNECEDOR" Member="CONTATOFORNECEDORs" ThisKey="cd_TipoContato" OtherKey="cd_TipoContato" Type="CONTATOFORNECEDOR" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TIPOPEDIDO" Member="TIPOPEDIDOs">
+    <Type Name="TIPOPEDIDO">
+      <Column Name="cd_TipoPedido" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_TipoPedido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TIPOPEDIDO_VENDA" Member="VENDAs" ThisKey="cd_TipoPedido" OtherKey="cd_TipoPedido" Type="VENDA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TIPOPESSOA" Member="TIPOPESSOAs">
+    <Type Name="TIPOPESSOA">
+      <Column Name="cd_TipoPessoa" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_TipoPessoa" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="TIPOPESSOA_PESSOA" Member="PESSOAs" ThisKey="cd_TipoPessoa" OtherKey="cd_TipoPessoa" Type="PESSOA" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UF" Member="UFs">
+    <Type Name="UF">
+      <Column Name="cd_Uf" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_Uf" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="UF_CIDADE" Member="CIDADEs" ThisKey="cd_Uf" OtherKey="cd_Estado" Type="CIDADE" />
+    </Type>
+  </Table>
+  <Table Name="dbo.VENDA" Member="VENDAs">
+    <Type Name="VENDA">
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Pessoa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Data" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="cd_TipoPedido" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Observacoes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="statusPagamentoVenda" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="cd_FormaPagamento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_Funcionario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dt_DataPrevista" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="statusVenda" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="statusPedidoCostureira" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="statusEntregaVenda" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="dt_DataEntrega" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="exibirNotificacao" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Flag" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="VENDA_IMAGEMVENDA" Member="IMAGEMVENDAs" ThisKey="cd_Venda" OtherKey="cd_Venda" Type="IMAGEMVENDA" />
+      <Association Name="VENDA_ITENSVENDA" Member="ITENSVENDAs" ThisKey="cd_Venda" OtherKey="cd_Venda" Type="ITENSVENDA" />
+      <Association Name="VENDA_PAGAMENTOVENDA" Member="PAGAMENTOVENDAs" ThisKey="cd_Venda" OtherKey="cd_Venda" Type="PAGAMENTOVENDA" />
+      <Association Name="FUNCIONARIO_VENDA" Member="FUNCIONARIO" ThisKey="cd_Funcionario" OtherKey="cd_Funcionario" Type="FUNCIONARIO" IsForeignKey="true" />
+      <Association Name="PESSOA_VENDA" Member="PESSOA" ThisKey="cd_Pessoa" OtherKey="cd_Pessoa" Type="PESSOA" IsForeignKey="true" />
+      <Association Name="FORMAPAGAMENTO_VENDA" Member="FORMAPAGAMENTO" ThisKey="cd_FormaPagamento" OtherKey="cd_FormaPagamento" Type="FORMAPAGAMENTO" IsForeignKey="true" />
+      <Association Name="TIPOPEDIDO_VENDA" Member="TIPOPEDIDO" ThisKey="cd_TipoPedido" OtherKey="cd_TipoPedido" Type="TIPOPEDIDO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ViewLogPagamentoVenda" Member="ViewLogPagamentoVendas">
+    <Type Name="ViewLogPagamentoVenda">
+      <Column Name="cd_PagamentoVenda" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Operacao" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ds_Valor_Antigo" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_Valor_Atual" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="nm_Funcionario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Edicao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ViewRelatorioVenda" Member="ViewRelatorioVendas">
+    <Type Name="ViewRelatorioVenda">
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nm_Fantasia" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="nm_Pessoa" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Quantidade" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Produto" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Tamanho" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Observacoes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ds_Gola" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Malha" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ValorUnitario" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="statusEntregaVenda" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ds_TipoPedido" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Data" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dt_DataEntrega" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="dt_DataPrevista" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="nm_Funcionario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="statusVenda" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="statusPagamentoVenda" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ViewLogVenda" Member="ViewLogVendas">
+    <Type Name="ViewLogVenda">
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Operacao" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="nm_Funcionario" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Edicao" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ViewRelatorioCostureira" Member="ViewRelatorioCostureiras">
+    <Type Name="ViewRelatorioCostureira">
+      <Column Name="nm_Fantasia" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="nm_Pessoa" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nm_Costureira" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Quantidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Produto" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Tamanho" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Observacoes" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ds_Gola" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Malha" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ValorUnit" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorTotal" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_Data" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ds_DataPagamento" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="statusPagamento" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ViewRelatorioPagamento" Member="ViewRelatorioPagamentos">
+    <Type Name="ViewRelatorioPagamento">
+      <Column Name="cd_Venda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_PagamentoVenda" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nm_Fantasia" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="nm_Pessoa" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_ValorParcela" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_Reajuste" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="ds_ValorReajuste" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorReajustado" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorRecebido" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="ds_ValorRestante" Type="System.Decimal" DbType="Decimal(9,2)" CanBeNull="true" />
+      <Column Name="dt_Data" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Pagamento_Prevista" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="dt_Pagamento_Efetuado" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ACAO" Member="ACAOs">
+    <Type Name="ACAO">
+      <Column Name="cd_Acao" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ds_Acao" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="ACAO_MODULO_ACAO" Member="MODULO_ACAOs" ThisKey="cd_Acao" OtherKey="cd_Acao" Type="MODULO_ACAO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CATEGORIA" Member="CATEGORIAs">
+    <Type Name="CATEGORIA">
+      <Column Name="cd_Categoria" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Categoria" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="CATEGORIA_PRODUTO" Member="PRODUTOs" ThisKey="cd_Categoria" OtherKey="cd_Categoria" Type="PRODUTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MODULO_ACAO" Member="MODULO_ACAOs">
+    <Type Name="MODULO_ACAO">
+      <Column Name="cd_PerfilModulo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="cd_Acao" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="ACAO_MODULO_ACAO" Member="ACAO" ThisKey="cd_Acao" OtherKey="cd_Acao" Type="ACAO" IsForeignKey="true" />
+      <Association Name="PERFIL_MODULO_MODULO_ACAO" Member="PERFIL_MODULO" ThisKey="cd_PerfilModulo" OtherKey="cd_PerfilModulo" Type="PERFIL_MODULO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERFIL_MODULO" Member="PERFIL_MODULOs">
+    <Type Name="PERFIL_MODULO">
+      <Column Name="cd_PerfilModulo" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Perfil" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Modulo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PERFIL_MODULO_MODULO_ACAO" Member="MODULO_ACAOs" ThisKey="cd_PerfilModulo" OtherKey="cd_PerfilModulo" Type="MODULO_ACAO" />
+      <Association Name="PERFIL_PERFIL_MODULO" Member="PERFIL" ThisKey="cd_Perfil" OtherKey="cd_Perfil" Type="PERFIL" IsForeignKey="true" />
+      <Association Name="MODULO_PERFIL_MODULO" Member="MODULO" ThisKey="cd_Modulo" OtherKey="cd_Modulo" Type="MODULO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PERFIL_USUARIO" Member="PERFIL_USUARIOs">
+    <Type Name="PERFIL_USUARIO">
+      <Column Name="cd_PerfilUsuario" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Perfil" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="cd_Usuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="PERFIL_PERFIL_USUARIO" Member="PERFIL" ThisKey="cd_Perfil" OtherKey="cd_Perfil" Type="PERFIL" IsForeignKey="true" />
+      <Association Name="LOGIN_PERFIL_USUARIO" Member="LOGIN" ThisKey="cd_Usuario" OtherKey="cd_Login" Type="LOGIN" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PRODUTOS" Member="PRODUTOs">
+    <Type Name="PRODUTO">
+      <Column Name="cd_Produto" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_Produto" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_OrdemExibicao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_PrecoCusto" Type="System.Decimal" DbType="Decimal(10,4)" CanBeNull="true" />
+      <Column Name="ds_PrecoVenda" Type="System.Decimal" DbType="Decimal(10,4)" CanBeNull="true" />
+      <Column Name="ds_EstoqueMinimo" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_EstoqueAtual" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_UnidadeMedida" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_Fornecedor" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cd_Categoria" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="PRODUTO_ITENSVENDA" Member="ITENSVENDAs" ThisKey="cd_Produto" OtherKey="cd_Produto" Type="ITENSVENDA" />
+      <Association Name="CATEGORIA_PRODUTO" Member="CATEGORIA" ThisKey="cd_Categoria" OtherKey="cd_Categoria" Type="CATEGORIA" IsForeignKey="true" />
+      <Association Name="UNIDADEMEDIDA_PRODUTO" Member="UNIDADEMEDIDA" ThisKey="cd_UnidadeMedida" OtherKey="cd_UnidadeMedida" Type="UNIDADEMEDIDA" IsForeignKey="true" />
+      <Association Name="FORNECEDOR_PRODUTO" Member="FORNECEDOR" ThisKey="cd_Fornecedor" OtherKey="cd_Fornecedor" Type="FORNECEDOR" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UNIDADEMEDIDA" Member="UNIDADEMEDIDAs">
+    <Type Name="UNIDADEMEDIDA">
+      <Column Name="cd_UnidadeMedida" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ds_UnidadeMedida" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="UNIDADEMEDIDA_PRODUTO" Member="PRODUTOs" ThisKey="cd_UnidadeMedida" OtherKey="cd_UnidadeMedida" Type="PRODUTO" />
+    </Type>
+  </Table>
+  <Table Name="dbo.FORNECEDOR" Member="FORNECEDORs">
+    <Type Name="FORNECEDOR">
+      <Column Name="cd_Fornecedor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nm_Fornecedor" Type="System.String" DbType="VarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Endereco" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ds_Numero" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="ds_Bairro" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="cd_Cidade" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Cpf" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="ds_Rg" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="nm_Fantasia" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="FORNECEDOR_PRODUTO" Member="PRODUTOs" ThisKey="cd_Fornecedor" OtherKey="cd_Fornecedor" Type="PRODUTO" />
+      <Association Name="FORNECEDOR_CONTATOFORNECEDOR" Member="CONTATOFORNECEDORs" ThisKey="cd_Fornecedor" OtherKey="cd_Fornecedor" Type="CONTATOFORNECEDOR" />
+      <Association Name="CIDADE_FORNECEDOR" Member="CIDADE" ThisKey="cd_Cidade" OtherKey="cd_Cidade" Type="CIDADE" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CONTATOFORNECEDOR" Member="CONTATOFORNECEDORs">
+    <Type Name="CONTATOFORNECEDOR">
+      <Column Name="cd_ContatoFornecedor" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cd_Fornecedor" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Contato" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cd_TipoContato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="TIPOCONTATO_CONTATOFORNECEDOR" Member="TIPOCONTATO" ThisKey="cd_TipoContato" OtherKey="cd_TipoContato" Type="TIPOCONTATO" IsForeignKey="true" />
+      <Association Name="FORNECEDOR_CONTATOFORNECEDOR" Member="FORNECEDOR" ThisKey="cd_Fornecedor" OtherKey="cd_Fornecedor" Type="FORNECEDOR" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MODULO" Member="MODULOs">
+    <Type Name="MODULO">
+      <Column Name="cd_Modulo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ds_Modulo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="cd_ModuloPai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_OrdemExibicao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Ativo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ds_Icon" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Association Name="MODULO_PERFIL_MODULO" Member="PERFIL_MODULOs" ThisKey="cd_Modulo" OtherKey="cd_Modulo" Type="PERFIL_MODULO" />
+      <Association Name="MODULO_MODULO" Member="MODULOs" ThisKey="cd_Modulo" OtherKey="cd_ModuloPai" Type="MODULO" />
+      <Association Name="MODULO_MODULO" Member="MODULO1" ThisKey="cd_ModuloPai" OtherKey="cd_Modulo" Type="MODULO" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.funcCalcularReajuste" Method="funcCalcularReajuste" IsComposable="true">
+    <Parameter Name="cd_PagamentoVenda" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Decimal" />
+  </Function>
+  <Function Name="dbo.ProcRecuperarModuloAcao" Method="ProcRecuperarModuloAcao">
+    <Parameter Name="CodigoUsuario" Parameter="codigoUsuario" Type="System.Int32" DbType="Int" />
+    <Parameter Name="CodigoModulo" Parameter="codigoModulo" Type="System.Int32" DbType="Int" />
+    <ElementType Name="ProcRecuperarModuloAcaoResult">
+      <Column Name="cd_Acao" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ProcRecuperarPerfilModuloAcao" Method="ProcRecuperarPerfilModuloAcao">
+    <Parameter Name="CodigoPerfil" Parameter="codigoPerfil" Type="System.Int32" DbType="Int" />
+    <ElementType Name="ProcRecuperarPerfilModuloAcaoResult">
+      <Column Name="cd_Modulo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Modulo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="cd_ModuloPai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_OrdemExibicao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="leitura" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="inserir" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="editar" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="remover" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.ProcRecuperarModulo" Method="ProcRecuperarModulo">
+    <Parameter Name="CodigoUsuario" Parameter="codigoUsuario" Type="System.Int32" DbType="Int" />
+    <ElementType Name="ProcRecuperarModuloResult">
+      <Column Name="cd_Modulo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ds_Modulo" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="cd_ModuloPai" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_OrdemExibicao" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ds_Icon" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>

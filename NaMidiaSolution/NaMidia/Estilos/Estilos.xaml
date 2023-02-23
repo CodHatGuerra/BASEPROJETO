@@ -1,0 +1,648 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation">
+
+    <Style x:Key="botaoNovo"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/novoAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/novo.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <Style x:Key="botaoEditar"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/editarAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/editar.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoExcluir"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/excluirAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/excluir.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoImprimir"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/imprimirAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/imprimir.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoExportar"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/exportarAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/exportar.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoExportarPDF"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/pdfAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/pdf.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoExportarExcel"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/excelAtivo.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/excel.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoNotificacao"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/notificacaoAtivo.png"
+                               Height="20" />
+                        <Image Name="Normal"
+                               Source="../imagens/notificacao.png"
+                               Height="20" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoAdicionar"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/seta_direita_ativa.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/seta_direita.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="botaoRemover"
+           TargetType="Button">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid>
+                        <Image Name="Pressed"
+                               Source="../imagens/seta_esquerda_ativa.png"
+                               Height="35" />
+                        <Image Name="Normal"
+                               Source="../imagens/seta_esquerda.png"
+                               Height="35" />
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="Pressed"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter TargetName="Normal"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                     From="0.1"
+                                                     To="1"></DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--<Style x:Key="botaoEntrar"
+           TargetType="telerik:RadButton">
+        <Setter Property="ToolTip"
+                Value="Clique para entrar" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="Height"
+                Value="30" />
+        <Setter Property="Width"
+                Value="95" />
+        <Setter Property="Margin"
+                Value="0 0 5 0" />
+        <Setter Property="telerik:StyleManager.Theme"
+                Value="Summer" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type telerik:RadButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="15"
+                              Height="12"
+                              Margin="12 0 7 0"
+                              HorizontalAlignment="Left"
+                              Data="M0,6 L7,10 L14,0"
+                              Stretch="Fill"
+                              Stroke="#FF67BE2E"
+                              StrokeThickness="4"
+                              UseLayoutRounding="False" />
+                        <TextBlock HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI"
+                                   Text="Entrar" />
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
+
+    <Style x:Key="EstiloGrid"
+           TargetType="telerik:RadGridView">
+        <Setter Property="IsReadOnly"
+                Value="False" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="GridLinesVisibility"
+                Value="None" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility"
+                Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility"
+                Value="Auto" />
+        <Setter Property="VerticalAlignment"
+                Value="Stretch" />
+        <Setter Property="HorizontalAlignment"
+                Value="Stretch" />
+        <Setter Property="FontFamily"
+                Value="Calibri" />
+        <Setter Property="FontSize"
+                Value="14" />
+        <Setter Property="ShowGroupPanel"
+                Value="True" />
+        <Setter Property="CanUserFreezeColumns"
+                Value="False" />
+        <Setter Property="CanUserReorderColumns"
+                Value="False" />
+        <Setter Property="IsFilteringAllowed"
+                Value="True" />
+        <Setter Property="RowIndicatorVisibility"
+                Value="Collapsed" />
+        <Setter Property="AlternationCount"
+                Value="2" />
+        <Setter Property="AlternateRowBackground"
+                Value="#ecf1f5" />
+    </Style>
+
+    <Style x:Key="EstiloGroupBox"
+           TargetType="GroupBox">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid Width="{Binding ElementName=gbCadastrados, Path=ActualWidth}"
+                          Margin="-10, 0, -10, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding}"
+                               Foreground="#ffffff"
+                               Background="#25a0da"
+                               HorizontalAlignment="Stretch"
+                               Height="22"
+                               Padding="10, 2, 10, 5"
+                               Margin="10"
+                               Grid.Column="0" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EstiloGroupBoxContato"
+           TargetType="GroupBox">
+        <Setter Property="HeaderTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Grid Width="{Binding ElementName=gbContato, Path=ActualWidth}"
+                          Margin="-10, 0, -10, 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding}"
+                               Foreground="#ffffff"
+                               Background="#25a0da"
+                               HorizontalAlignment="Stretch"
+                               Height="22"
+                               Padding="10, 2, 10, 5"
+                               Margin="10"
+                               Grid.Column="0" />
+                    </Grid>
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
+

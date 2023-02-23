@@ -1,0 +1,78 @@
+﻿<telerik:RadWindow x:Class="NaMidia.UI.SobreUI"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   telerik:StyleManager.Theme="Vista"
+                   WindowStartupLocation="CenterScreen"
+                   ResizeMode="NoResize"
+                   Header="Sobre"
+                   Height="260"
+                   Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Na Mídia - Versão 2.0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontWeight="ExtraBlack"
+                   FontSize="25"
+                   Margin="10"
+                   Grid.Row="0" />
+
+        <TextBlock Text="Desenvolvido por:"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontWeight="Black"
+                   FontSize="15"
+                   Margin="10"
+                   Grid.Row="1" />
+
+        <TextBlock Text="Luiz Rogério Scudeletti"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontSize="15"
+                   Margin="10 5 5 10"
+                   Grid.Row="2" />
+
+        <TextBlock Text="Rodrigo Navas"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontSize="15"
+                   Margin="10 0 5 10"
+                   Grid.Row="3" />
+
+        <TextBlock Text="Weverton Bazolli de Oliveira"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Left"
+                   FontSize="15"
+                   Margin="10 0 5 10"
+                   Grid.Row="4"
+                   MouseLeftButtonUp="TextBlock_MouseLeftButtonUp" />
+
+        <TextBlock x:Name="txbEasterEgg"
+                   Text="SÓ ALEGRIA"
+                   Visibility="Hidden"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Right"
+                   Foreground="Red"
+                   FontSize="15"
+                   Margin="10 0 75 10"
+                   Grid.Row="4" />
+
+        <TextBlock Text="Direitos Reservados - 2014"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"
+                   FontStyle="Italic"
+                   FontSize="15"
+                   Margin="10 5 5 10"
+                   Grid.Row="5" />
+
+    </Grid>
+</telerik:RadWindow>

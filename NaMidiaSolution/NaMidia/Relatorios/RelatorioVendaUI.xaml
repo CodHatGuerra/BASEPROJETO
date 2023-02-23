@@ -1,0 +1,266 @@
+﻿<UserControl x:Class="NaMidia.RELATORIOS.RelatorioVendaUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             x:Name="ucRelatorioVenda">
+
+    <UserControl.Resources>
+        <Style x:Key="Estilo_Placeholder"
+               TargetType="{x:Type TextBox}"
+               BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                     x:Name="Texto"
+                                     Background="Transparent"
+                                     Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}"
+                                     Background="{TemplateBinding Background}"
+                                     Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground"
+                                                Value="Transparent" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference Texto}}"
+                                                         Value="">
+                                                <Setter Property="Foreground"
+                                                        Value="LightGray" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="EstiloGroupBoxFiltro"
+               TargetType="GroupBox">
+            <Setter Property="HeaderTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <Grid Width="{Binding ElementName=dtVenda, Path=ActualWidth}"
+                              Margin="-10, 0, -10, 0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Content="{Binding}"
+                                   Foreground="#ffffff"
+                                   Background="#25a0da"
+                                   HorizontalAlignment="Stretch"
+                                   Height="22"
+                                   Padding="10, 2, 10, 5"
+                                   Margin="10,10,0,10"
+                                   Grid.Column="0" />
+                            <TextBox Grid.Column="1"
+                                     Height="22"
+                                     Foreground="LightGray"
+                                     Background="#ffffff"
+                                     Margin="2,0,0,0"
+                                     Style="{StaticResource Estilo_Placeholder}"
+                                     Tag="Filtro"
+                                     x:Name="txtFiltroCliente"
+                                     TextChanged="txtFiltroCliente_TextChanged"
+                                     HorizontalAlignment="Stretch">
+                            </TextBox>
+                        </Grid>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+                  VerticalScrollBarVisibility="Disabled">
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Background="#25a0da"
+                    BorderBrush="#ff0078ab"
+                    BorderThickness="1"
+                    VerticalAlignment="Top"
+                    Margin="10 5 10 5"
+                    Grid.Row="0">
+
+                <Label Content="Relatório de Vendas"
+                       FontSize="18"
+                       FontFamily="Calibri"
+                       FontWeight="ExtraLight"
+                       FontStyle="Italic"
+                       Foreground="#ffffff"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Left"
+                       Margin="5 0 0 0" />
+
+            </Border>
+
+            <GroupBox x:Name="gbCadastrados"
+                      Header="Vendas Cadastradas"
+                      BorderBrush="#25a0da"
+                      Margin="10 0 10 10"
+                      Style="{StaticResource EstiloGroupBoxFiltro}"
+                      Grid.Row="1">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition  x:Name="rGridView" Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <telerik:RadDataPager PageSize="{Binding LinhasGridView, ElementName= ucRelatorioVenda}"
+                                          Margin="5 2 5 0"
+                                          Grid.Column="0"
+                                          Grid.Row="0"
+                                          Source="{Binding Items, ElementName=dtVenda}"
+                                          IsTotalItemCountFixed="True"
+                                          DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                          telerik:StyleManager.Theme="Windows8" />
+
+                    <Button x:Name="btnImprimir"
+                            ToolTip="Clique para imprimir"
+                            IsEnabled="True"
+                            Style="{DynamicResource botaoImprimir}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"
+                            Margin="5 2 5 2"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Click="btnImprimir_Click" />
+
+                    <telerik:RadGridView x:Name="dtVenda"
+                                         IsReadOnly="True"
+                                         Margin="5 2 5 5"
+                                         Grid.Column="0"
+                                         Grid.Row="1"
+                                         Grid.ColumnSpan="2"
+                                         AutoGenerateColumns="False"
+                                         ItemsSource="{Binding ListaVenda, ElementName=ucRelatorioVenda}"
+                                         Style="{DynamicResource EstiloGrid}"
+                                         telerik:StyleManager.Theme="Windows8"
+                                         SelectionChanged="dtVenda_SelectionChanged"
+                                         MouseRightButtonUp="dtVenda_MouseRightButtonUp">
+
+                        <telerik:RadGridView.GroupDescriptors>
+
+                            <telerik:GroupDescriptor Member="nm_Fantasia"
+                                                     SortDirection="Ascending"
+                                                     DisplayContent="Cliente" />
+                        </telerik:RadGridView.GroupDescriptors>
+
+                        <telerik:RadContextMenu.ContextMenu>
+                            <telerik:RadContextMenu>
+                                <telerik:RadContextMenu.Items>
+                                    <telerik:RadMenuItem x:Name="miSalvar"
+                                                         Header="Salvar Imagem"
+                                                         Click="miSalvar_Click" />
+                                    <telerik:RadMenuItem x:Name="miVer"
+                                                         Header="Ver Imagem"
+                                                         Click="miVer_Click" />
+                                </telerik:RadContextMenu.Items>
+                            </telerik:RadContextMenu>
+                        </telerik:RadContextMenu.ContextMenu>
+
+                        <telerik:RadGridView.Columns>
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Código"
+                                                        DataMemberBinding="{Binding cd_Venda}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Cliente"
+                                                        DataMemberBinding="{Binding nm_Fantasia}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Contato"
+                                                        DataMemberBinding="{Binding nm_Pessoa}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Quantidade"
+                                                        DataMemberBinding="{Binding ds_Quantidade}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Produto"
+                                                        DataMemberBinding="{Binding ds_Produto}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Tamanho"
+                                                        DataMemberBinding="{Binding ds_Tamanho}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Obs Item."
+                                                        DataMemberBinding="{Binding ds_Observacoes}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Gola"
+                                                        DataMemberBinding="{Binding ds_Gola}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Malha"
+                                                        DataMemberBinding="{Binding ds_Malha}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Valor Unitário"
+                                                        DataMemberBinding="{Binding ds_ValorUnitario,StringFormat='R$ ##,##0.00'}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Status (Pagamento)"
+                                                        DataMemberBinding="{Binding statusPagamentoVenda}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Status (Entrega)"
+                                                        DataMemberBinding="{Binding statusEntregaVenda}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Tipo da Venda"
+                                                        DataMemberBinding="{Binding ds_TipoPedido}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Data"
+                                                        DataMemberBinding="{Binding dt_Data,StringFormat={}{0:dd/MM/yyyy}}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Data (Prevista)"
+                                                        DataMemberBinding="{Binding dt_DataPrevista, StringFormat={}{0:dd/MM/yyyy}}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Data (Entrega)"
+                                                        DataMemberBinding="{Binding dt_DataEntrega, StringFormat={}{0:dd/MM/yyyy}}" />
+
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Vendedor"
+                                                        DataMemberBinding="{Binding nm_Funcionario}" />
+                            
+                            <telerik:GridViewDataColumn Width="Auto"
+                                                        Header="Venda Ativa"
+                                                        DataMemberBinding="{Binding statusVenda}" />
+                        </telerik:RadGridView.Columns>
+
+                    </telerik:RadGridView>
+
+                </Grid>
+
+            </GroupBox>
+
+        </Grid>
+
+    </ScrollViewer>
+
+</UserControl>

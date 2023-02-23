@@ -1,0 +1,825 @@
+﻿<UserControl x:Class="NaMidia.UI.PagamentoVendaUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             x:Name="ucPagamentoVenda">
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled">
+
+        <Grid>
+
+            <!--<Grid.Resources>
+                <telerik:BinaryImageConverter x:Key="converter" />
+            </Grid.Resources>-->
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+
+                <Border Background="#25a0da"
+                        BorderBrush="#ff0078ab"
+                        BorderThickness="1"
+                        VerticalAlignment="Top"
+                        Margin="10 5 10 5">
+
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Label Content="Cadastro de Crediários"
+                               FontSize="18"
+                               FontFamily="Calibri"
+                               FontWeight="ExtraLight"
+                               FontStyle="Italic"
+                               Foreground="#ffffff"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Left"
+                               Margin="5 0 0 0"
+                               Grid.Column="0" />
+
+                        <Button x:Name="btnNovo"
+                                ToolTip="Clique para adicionar"
+                                Style="{DynamicResource botaoNovo}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="5 2 5 2"
+                                Grid.Column="1"
+                                Click="btnNovo_Click" />
+
+                        <Button x:Name="btnEditarParcela"
+                                ToolTip="Clique para editar"
+                                Style="{DynamicResource botaoEditar}"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center"
+                                Margin="5 2 5 2"
+                                Grid.Column="2"
+                                Click="btnEditarParcela_Click" />
+
+                    </Grid>
+
+                </Border>
+
+            </Grid>
+
+            <Grid Grid.Row="1">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <GroupBox x:Name="gbCadastrados"
+                          Header="Crediários Cadastrados"
+                          BorderBrush="#25a0da"
+                          Margin="10 0 10 10"
+                          Grid.Column="0"
+                          Style="{StaticResource EstiloGroupBox}">
+
+                    <Grid>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition x:Name="rGridView" Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Margin="5"
+                                    Grid.Row="0">
+
+                            <RadioButton Name="rdbQuitado"
+                                         Content="Quitado"
+                                         VerticalAlignment="Center"
+                                         Margin="0 2 10 0"
+                                         Checked="rdbQuitado_Checked" />
+
+                            <RadioButton Name="rdbNaoQuitado"
+                                         Content="Não Quitado"
+                                         IsChecked="True"
+                                         VerticalAlignment="Center"
+                                         Margin="10 2 0 0"
+                                         Checked="rdbNaoQuitado_Checked" />
+
+                        </StackPanel>
+
+                        <telerik:RadDataPager PageSize="{Binding LinhasGridView, ElementName= ucPagamentoVenda}"
+                                              Margin="5 2 5 0"
+                                              Grid.Row="1"
+                                              Source="{Binding Items, ElementName=dtVenda}"
+                                              IsTotalItemCountFixed="True"
+                                              DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                              telerik:StyleManager.Theme="Windows8" />
+
+                        <telerik:RadGridView x:Name="dtVenda"
+                                             IsReadOnly="True"
+                                             Margin="5 2 5 5"
+                                             Grid.Row="2"
+                                             CanUserDeleteRows="False"
+                                             AutoGenerateColumns="False"
+                                             ItemsSource="{Binding ListaVenda, ElementName= ucPagamentoVenda}"
+                                             Style="{DynamicResource EstiloGrid}"
+                                             telerik:StyleManager.Theme="Windows8"
+                                             SelectionChanged="dtVenda_SelectionChanged">
+                            <telerik:RadGridView.GroupDescriptors>
+
+                                <telerik:GroupDescriptor Member="PESSOA.nm_Fantasia"
+                                                         SortDirection="Ascending"
+                                                         DisplayContent="Cliente" />
+                            </telerik:RadGridView.GroupDescriptors>
+                            <telerik:RadGridView.Columns>
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Código"
+                                                            DataMemberBinding="{Binding cd_Venda}">
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Cliente"
+                                                            DataMemberBinding="{Binding PESSOA.nm_Fantasia}" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Contato"
+                                                            DataMemberBinding="{Binding PESSOA.nm_Pessoa}" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Data"
+                                                            DataMemberBinding="{Binding dt_Data, StringFormat={}{0:dd/MM/yyyy}}" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Vendedor"
+                                                            DataMemberBinding="{Binding FUNCIONARIO.nm_Funcionario}" />
+                            </telerik:RadGridView.Columns>
+                        </telerik:RadGridView >
+
+                    </Grid>
+
+                </GroupBox>
+
+                <GroupBox Header="Informações"
+                          BorderBrush="#25a0da"
+                          Margin="10 0 10 10"
+                          Style="{StaticResource EstiloGroupBox}"
+                          Grid.Column="1">
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="Cliente:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="0" />
+
+                            <TextBox x:Name="txtCliente"
+                                     ToolTip="Digite o nome do Cliente"
+                                     VerticalAlignment="Top"
+                                     Height="22"
+                                     Margin="45 5 5 5"
+                                     Grid.Column="1"
+                                     Grid.Row="0" />
+
+                            <Label Content="Contato:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Grid.Column="2" />
+
+                            <TextBox x:Name="txtContato"
+                                     ToolTip="Digite o nome do Cliente"
+                                     VerticalAlignment="Top"
+                                     Height="22"
+                                     Margin="0 5 5 5"
+                                     Grid.Column="3" />
+
+                        </Grid>
+
+                        <Grid Grid.Column="0"
+                              Grid.Row="1"
+                              Grid.ColumnSpan="2">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Data Pedido:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="0" />
+
+                            <DatePicker x:Name="txtDataVenda"
+                                        IsEnabled="False"
+                                        VerticalAlignment="Top"
+                                        Height="22"
+                                        Margin="5"
+                                        Grid.Column="1"
+                                        Grid.Row="0" />
+
+                            <Label Content="Valor Parcela:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="1" />
+
+                            <telerik:RadNumericUpDown ValueFormat="Currency"
+                                                      ShowButtons="False"
+                                                      IsEnabled="False"
+                                                      HorizontalContentAlignment="Left"
+                                                      x:Name="txtValorParcela"
+                                                      VerticalAlignment="Top"
+                                                      Height="22"
+                                                      Margin="5"
+                                                      Grid.Column="1"
+                                                      Grid.Row="1"
+                                                      Value="{Binding ValorParcela,ElementName=ucPagamentoVenda}" />
+
+                            <Label Content="Tipo Reajuste:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="2" />
+
+                            <StackPanel Orientation="Horizontal"
+                                        Margin="5"
+                                        Grid.Column="1"
+                                        Grid.Row="2">
+
+                                <RadioButton Name="rdFixo"
+                                             Content="Fixo"
+                                             IsEnabled="True"
+                                             VerticalAlignment="Center"
+                                             Margin="0 2 10 0" />
+
+                                <RadioButton Name="rdPorcentagem"
+                                             Content="Porcentagem"
+                                             IsEnabled="True"
+                                             VerticalAlignment="Center"
+                                             Margin="10 2 0 0" />
+
+                            </StackPanel>
+
+                            <Label Content="Reajuste:"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="3" />
+
+                            <Grid Grid.Column="1"
+                                  Grid.Row="3"
+                                  Margin=" 5">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <telerik:RadNumericUpDown  x:Name="txtValorReajuste"
+                                                           IsEnabled="False"
+                                                           ShowButtons="False"
+                                                           VerticalAlignment="Top"
+                                                           Height="22"
+                                                           Margin="0 5 5 0"
+                                                           Grid.Column="0" />
+
+                                <TextBox x:Name="txtValorReajusteCalculado"
+                                         IsReadOnly="True"
+                                         VerticalAlignment="Top"
+                                         Height="22"
+                                         Margin="5 5 0 5"
+                                         Grid.Column="1" />
+
+                                <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Right"
+                                            Margin="5 5 0 5"
+                                            Grid.Column="2">
+
+                                    <telerik:RadButton x:Name="btnAcrescimo"
+                                                       IsEnabled="False"
+                                                       Content="+"
+                                                       Height="22"
+                                                       Width="30"
+                                                       Margin="0 0 5 0"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Right"
+                                                       Click="btnAcrescimo_Click" />
+
+                                    <telerik:RadButton x:Name="btnDesconto"
+                                                       IsEnabled="False"
+                                                       Content="-"
+                                                       Height="22"
+                                                       Width="30"
+                                                       VerticalAlignment="Top"
+                                                       HorizontalAlignment="Right"
+                                                       Click="btnDesconto_Click" />
+
+                                </StackPanel>
+
+                            </Grid>
+
+                            <Label Content="Vl. Reajustado:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="4" />
+
+                            <TextBox x:Name="txtValorReajustado"
+                                     IsReadOnly="True"
+                                     VerticalAlignment="Top"
+                                     Height="22"
+                                     Margin="5"
+                                     Grid.Column="1"
+                                     Grid.Row="4"
+                                     TextChanged="txtValorPago_TextChanged" />
+
+                            <Label Content="Valor Pago:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="5" />
+
+                            <TextBox x:Name="txtValorPago"
+                                     IsReadOnly="True"
+                                     VerticalAlignment="Top"
+                                     Height="22"
+                                     Margin="5"
+                                     Grid.Column="1"
+                                     Grid.Row="5"
+                                     TextChanged="txtValorPago_TextChanged"
+                                     KeyDown="txtValorPago_KeyDown" />
+
+                            <Label Content="Valor Restante:"
+                                   VerticalAlignment="Top"
+                                   HorizontalAlignment="Left"
+                                   Margin="2"
+                                   Grid.Column="0"
+                                   Grid.Row="6" />
+
+                            <TextBox x:Name="txtValorRestante"
+                                     IsReadOnly="True"
+                                     VerticalAlignment="Top"
+                                     Height="22"
+                                     Margin="5"
+                                     Grid.Column="1"
+                                     Grid.Row="6" />
+
+                            <StackPanel Orientation="Horizontal"
+                                        VerticalAlignment="Top"
+                                        HorizontalAlignment="Right"
+                                        Margin="10 10 6 0"
+                                        Grid.Column="2"
+                                        Grid.Row="7">
+                                <telerik:RadButton x:Name="btnSalvarPagamento"
+                                                   ToolTip="Clique para salvar"
+                                                   Width="95"
+                                                   Height="30"
+                                                   Margin=" 0 0 5 0"
+                                                   HorizontalContentAlignment="Stretch"
+                                                   IsEnabled="False"
+                                                   Click="btnSalvarPagamento_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Width="15"
+                                              Height="12"
+                                              Margin="12 0 7 0"
+                                              HorizontalAlignment="Left"
+                                              Data="M0,6 L7,10 L14,0"
+                                              Stretch="Fill"
+                                              Stroke="#FF67BE2E"
+                                              StrokeThickness="4"
+                                              UseLayoutRounding="False" />
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   FontFamily="Segoe UI"
+                                                   Text="Salvar" />
+                                    </StackPanel>
+                                </telerik:RadButton>
+
+                                <telerik:RadButton x:Name="btnCancelarVenda"
+                                                   ToolTip="Clique para cancelar"
+                                                   Width="95"
+                                                   Height="30"
+                                                   Margin="5 0 0 0"
+                                                   HorizontalContentAlignment="Stretch"
+                                                   IsEnabled="False"
+                                                   Click="btnCancelarVenda_Click">
+                                    <StackPanel Orientation="Horizontal">
+                                        <Path Width="14"
+                                              Height="14"
+                                              Margin="10 0 7 0"
+                                              Data="M5.5,0 L9.5,0 L9.5,5.5 L15,5.5 L15,9.5 L9.5,9.5 L9.5,15 L5.5,15 L5.5,9.5 L0,9.5 L0,5.5 L5.5,5.5 z"
+                                              Fill="#FFEB2020"
+                                              RenderTransformOrigin="0.5,0.5"
+                                              Stretch="Fill"
+                                              StrokeThickness="0"
+                                              UseLayoutRounding="False">
+                                            <Path.RenderTransform>
+                                                <RotateTransform Angle="-45" />
+                                            </Path.RenderTransform>
+                                        </Path>
+                                        <TextBlock HorizontalAlignment="Right"
+                                                   FontFamily="Segoe UI"
+                                                   Text="Cancelar" />
+                                    </StackPanel>
+                                </telerik:RadButton>
+                            </StackPanel>
+
+                            <GroupBox Header="Parcelas"
+                                      BorderBrush="#25a0da"
+                                      Margin="5 10 5 5"
+                                      Grid.Column="0"
+                                      Grid.Row="8"
+                                      Grid.ColumnSpan="3">
+
+                                <telerik:RadGridView x:Name="dtParcela"
+                                                     Margin="5 2 5 5"
+                                                     CanUserDeleteRows="False"
+                                                     IsReadOnly="True"
+                                                     IsEnabled="False"
+                                                     AutoGenerateColumns="False"
+                                                     ShowGroupPanel="False"
+                                                     ItemsSource="{Binding ListaPagamentoVenda, ElementName= ucPagamentoVenda}"
+                                                     Style="{DynamicResource EstiloGrid}"
+                                                     telerik:StyleManager.Theme="Windows8"
+                                                     SelectionChanged="dtParcela_SelectionChanged"
+                                                     LoadingRowDetails="dtParcela_LoadingRowDetails"
+                                                     RowDetailsVisibilityChanging="dtParcela_RowDetailsVisibilityChanging">
+                                    <telerik:RadGridView.Columns>
+                                        <telerik:GridViewToggleRowDetailsColumn />
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Código"
+                                                                    DataMemberBinding="{Binding cd_Venda}">
+                                        </telerik:GridViewDataColumn>
+
+                                        <telerik:GridViewDataColumn  Width="Auto"
+                                                                     Header="Valor Parcela"
+                                                                     DataMemberBinding="{Binding ds_ValorParcela,StringFormat='R$ ##,##0.00'}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Reajuste"
+                                                                    DataMemberBinding="{Binding ds_ValorReajuste,StringFormat='R$ ##,##0.00'}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Tipo"
+                                                                    DataMemberBinding="{Binding REAJUSTE.ds_Reajuste}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Valor Reajustado"
+                                                                    DataMemberBinding="{Binding ds_ValorReajustado,StringFormat='R$ ##,##0.00'}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Valor Pago"
+                                                                    DataMemberBinding="{Binding ds_ValorRecebido,StringFormat='R$ ##,##0.00'}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Valor Restante"
+                                                                    DataMemberBinding="{Binding ds_ValorRestante,StringFormat='R$ ##,##0.00'}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Data Pagto"
+                                                                    DataMemberBinding="{Binding dt_Pagamento_Efetuado, StringFormat={}\{0:dd/MM/yyyy\}}" />
+
+                                        <telerik:GridViewDataColumn Width="Auto"
+                                                                    Header="Data Vecto"
+                                                                    DataMemberBinding="{Binding dt_Pagamento_Prevista, StringFormat={}\{0:dd/MM/yyyy\}}" />
+
+                                    </telerik:RadGridView.Columns>
+
+                                    <telerik:RadGridView.RowDetailsTemplate>
+                                        <DataTemplate>
+                                            <telerik:RadTabControl x:Name="rtParcelas"
+                                                                   Width="500"
+                                                                   VerticalAlignment="Center"
+                                                                   HorizontalAlignment="Left"
+                                                                   Margin="8"
+                                                                   telerik:TouchManager.IsTouchHitTestVisible="False">
+                                                <telerik:RadTabItem x:Name="tiParcela"
+                                                                    Header="Consulta"
+                                                                    IsSelected="True"
+                                                                    DataContext="{Binding PAGAMENTOVENDASREGISTROs}">
+                                                    <Grid>
+                                                        <telerik:RadGridView x:Name="dtParcelaEdicao"
+                                                                             Margin="5 2 5 5"
+                                                                             CanUserDeleteRows="False"
+                                                                             IsReadOnly="True"
+                                                                             AutoGenerateColumns="False"
+                                                                             ShowGroupPanel="False"
+                                                                             Style="{DynamicResource EstiloGrid}"
+                                                                             telerik:StyleManager.Theme="Windows8"
+                                                                             ItemsSource="{Binding}">
+
+                                                            <telerik:RadGridView.Columns>
+
+                                                                <telerik:GridViewDataColumn  Width="*"
+                                                                                             Header="Código"
+                                                                                             DataMemberBinding="{Binding cd_PagamentoVendaRegistros}" />
+
+                                                                <telerik:GridViewDataColumn  Width="*"
+                                                                                             Header="Valor Pago"
+                                                                                             DataMemberBinding="{Binding ds_ValorPagamento,StringFormat='R$ ##,##0.00'}" />
+
+                                                                <telerik:GridViewDataColumn Width="*"
+                                                                                            Header="Data Pagto."
+                                                                                            DataMemberBinding="{Binding dt_Pagamento,StringFormat={}\{0:dd/MM/yyyy\}}">
+                                                                </telerik:GridViewDataColumn>
+
+                                                                <telerik:GridViewColumn Header="Editar"
+                                                                                        Width="*">
+                                                                    <telerik:GridViewColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <telerik:RadButton  Margin="2 0 2 0"
+                                                                                                Style="{DynamicResource botaoEditar}"
+                                                                                                x:Name="btnEditardtParcelaEdicao"
+                                                                                                Click="btnEditardtParcelaEdicao_Click"
+                                                                                                Loaded="btnEditardtParcelaEdicao_Loaded"/>
+                                                                        </DataTemplate>
+                                                                    </telerik:GridViewColumn.CellTemplate>
+                                                                </telerik:GridViewColumn>
+
+                                                                <telerik:GridViewColumn Header="Excluir"
+                                                                                        Width="*">
+                                                                    <telerik:GridViewColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <telerik:RadButton Margin="2 0 2 0"
+                                                                                               Style="{DynamicResource botaoExcluir}"
+                                                                                               x:Name="btnExcluirdtParcelaEdicao"
+                                                                                               Click="btnExcluirdtParcelaEdicao_Click" 
+                                                                                               Loaded="btnExcluirdtParcelaEdicao_Loaded"/>
+                                                                        </DataTemplate>
+                                                                    </telerik:GridViewColumn.CellTemplate>
+                                                                </telerik:GridViewColumn>
+
+                                                                <telerik:GridViewColumn Header="Imprimir"
+                                                                                        Width="*">
+                                                                    <telerik:GridViewColumn.CellTemplate>
+                                                                        <DataTemplate>
+                                                                            <telerik:RadButton  Margin="2 0 2 0"
+                                                                                                Style="{DynamicResource botaoImprimir}"
+                                                                                                x:Name="btnImprimirdtParcelaEdicao"
+                                                                                                Click="btnImprimirdtParcelaEdicao_Click" />
+                                                                        </DataTemplate>
+                                                                    </telerik:GridViewColumn.CellTemplate>
+                                                                </telerik:GridViewColumn>
+
+                                                            </telerik:RadGridView.Columns>
+
+                                                        </telerik:RadGridView>
+                                                    </Grid>
+                                                </telerik:RadTabItem>
+                                                <telerik:RadTabItem x:Name="tiEditar"
+                                                                    Header="Editar"
+                                                                    IsEnabled="False">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <StackPanel Orientation="Horizontal"
+                                                                    HorizontalAlignment="Right"
+                                                                    Grid.Column="0"
+                                                                    Grid.Row="0"
+                                                                    Grid.ColumnSpan="2">
+
+                                                            <telerik:RadButton x:Name="btnSalvarParcela"
+                                                                               Content="Salvar"
+                                                                               ToolTip="Clique para salvar"
+                                                                               Width="60"
+                                                                               Height="23"
+                                                                               Margin="5 10 5 5" 
+                                                                               Click="btnSalvarParcela_Click"/>
+
+                                                            <telerik:RadButton x:Name="btnCancelarParcela"
+                                                                               Content="Cancelar"
+                                                                               ToolTip="Clique para cancelar"
+                                                                               Width="60"
+                                                                               Height="23"
+                                                                               Margin="5 10 10 5"
+                                                                               Click="btnCancelarParcela_Click"/>
+                                                        </StackPanel>
+
+                                                        <Label Content="Valor Pago:"
+                                                               VerticalAlignment="Top"
+                                                               HorizontalAlignment="Left"
+                                                               Margin="2"
+                                                               Grid.Column="0"
+                                                               Grid.Row="1" />
+
+                                                        <TextBox IsReadOnly="False"
+                                                                 VerticalAlignment="Top"
+                                                                 Height="22"
+                                                                 Margin="5 5 10 5"
+                                                                 Grid.Column="1"
+                                                                 Grid.Row="1"
+                                                                 x:Name="txtValorPagodtParcelaEdicao"
+                                                                 Loaded="txtValorPagodtParcelaEdicao_Loaded" />
+
+                                                        <Label Content="Valor Restante:"
+                                                               VerticalAlignment="Top"
+                                                               HorizontalAlignment="Left"
+                                                               Margin="2"
+                                                               Grid.Column="0"
+                                                               Grid.Row="2" />
+
+                                                        <TextBox IsReadOnly="True"
+                                                                 VerticalAlignment="Top"
+                                                                 Height="22"
+                                                                 Margin="5 5 10 5"
+                                                                 Grid.Column="1"
+                                                                 Grid.Row="2"
+                                                                 x:Name="txtValorRestantedtParcelaEdicao"
+                                                                 Loaded="txtValorRestantedtParcelaEdicao_Loaded" />
+                                                    </Grid>
+
+                                                </telerik:RadTabItem>
+                                            </telerik:RadTabControl>
+                                        </DataTemplate>
+                                    </telerik:RadGridView.RowDetailsTemplate>
+                                </telerik:RadGridView >
+
+                            </GroupBox>
+
+                            <GroupBox Header="Detalhes do Pedido"
+                                      BorderBrush="#25a0da"
+                                      Margin="5 0 5 3"
+                                      Grid.Column="2"
+                                      Grid.Row="0"
+                                      Grid.RowSpan="7">
+                                <Grid>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Content="Valor Venda:"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="2"
+                                           Grid.Column="0"
+                                           Grid.Row="0" />
+
+                                    <telerik:RadNumericUpDown ValueFormat="Currency"
+                                                              ShowButtons="False"
+                                                              IsEditable="False"
+                                                              x:Name="txtValorVenda"
+                                                              HorizontalContentAlignment="Left"
+                                                              VerticalAlignment="Top"
+                                                              Height="22"
+                                                              Margin="5"
+                                                              Grid.Column="1"
+                                                              Grid.Row="0"
+                                                              Value="{Binding ValorTotal,ElementName=ucPagamentoVenda}" />
+
+                                    <Label Content="Valor c/ Reajuste:"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="2"
+                                           Grid.Column="0"
+                                           Grid.Row="1" />
+
+                                    <telerik:RadNumericUpDown ValueFormat="Currency"
+                                                              ShowButtons="False"
+                                                              IsEditable="False"
+                                                              HorizontalContentAlignment="Left"
+                                                              x:Name="txtValorVendaComReajuste"
+                                                              VerticalAlignment="Top"
+                                                              Height="22"
+                                                              Margin="5"
+                                                              Grid.Column="1"
+                                                              Grid.Row="1"
+                                                              Value="{Binding ValorTotalComReajuste,ElementName=ucPagamentoVenda}" />
+
+                                    <Label Content="Total Reajuste:"
+                                           Margin="2"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Grid.Column="0"
+                                           Grid.Row="3" />
+
+                                    <telerik:RadNumericUpDown ValueFormat="Currency"
+                                                              ShowButtons="False"
+                                                              IsEditable="False"
+                                                              HorizontalContentAlignment="Left"
+                                                              x:Name="txtTotalReajusteVenda"
+                                                              VerticalAlignment="Top"
+                                                              Height="22"
+                                                              Margin="5"
+                                                              Grid.Column="1"
+                                                              Grid.Row="3"
+                                                              Value="{Binding ValorTotalReajuste,ElementName=ucPagamentoVenda}" />
+
+                                    <Label Content="Valor Pago:"
+                                           Margin="2"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Grid.Column="0"
+                                           Grid.Row="4" />
+
+                                    <telerik:RadNumericUpDown ValueFormat="Currency"
+                                                              ShowButtons="False"
+                                                              IsEditable="False"
+                                                              HorizontalContentAlignment="Left"
+                                                              x:Name="txtValorPagoVenda"
+                                                              VerticalAlignment="Top"
+                                                              Height="22"
+                                                              Margin="5"
+                                                              Grid.Column="1"
+                                                              Grid.Row="4"
+                                                              Value="{Binding ValorPago,ElementName=ucPagamentoVenda}" />
+
+                                    <Label Content="Valor Restante:"
+                                           Margin="2"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Grid.Column="0"
+                                           Grid.Row="5" />
+
+                                    <telerik:RadNumericUpDown ValueFormat="Currency"
+                                                              ShowButtons="False"
+                                                              IsEditable="False"
+                                                              HorizontalContentAlignment="Left"
+                                                              x:Name="txtValorRestanteVenda"
+                                                              VerticalAlignment="Top"
+                                                              Height="22"
+                                                              Margin="5"
+                                                              Grid.Column="1"
+                                                              Grid.Row="5"
+                                                              Value="{Binding ValorRestante,ElementName=ucPagamentoVenda}" />
+
+                                </Grid>
+
+                            </GroupBox>
+
+                        </Grid>
+
+                    </Grid>
+
+                </GroupBox>
+
+            </Grid>
+
+        </Grid>
+
+    </ScrollViewer>
+
+</UserControl>

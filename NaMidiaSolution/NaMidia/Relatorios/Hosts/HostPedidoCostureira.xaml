@@ -1,0 +1,87 @@
+﻿<telerik:RadWindow x:Class="NaMidia.RELATORIOS.Hosts.HostPedidoCostureira"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+                   xmlns:wfr="clr-namespace:Microsoft.Reporting.WinForms;assembly=Microsoft.ReportViewer.WinForms"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   telerik:StyleManager.Theme="Vista"
+                   WindowStartupLocation="CenterScreen"
+                   Header="Relatório Pedido Costureira"
+                   Width="980"
+                   Height="500"
+                   x:Name="ucPedidoCostureira">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="95" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <GroupBox x:Name="gbCadastrados"
+                  Header="Informações"
+                  BorderBrush="#25a0da"
+                  Margin="10 0 10 10"
+                  Style="{StaticResource EstiloGroupBox}"
+                  Grid.Row="0">
+
+            <Grid>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Código da Venda"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="2"
+                       Grid.Column="0" />
+
+                <TextBox x:Name="txtCdVenda"
+                         VerticalAlignment="Top"
+                         Height="23"
+                         Width="200"
+                         Margin="5"
+                         Grid.Column="1" />
+
+                <Label Content="Costureira"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Left"
+                       Margin="2"
+                       Grid.Column="2" />
+
+                <telerik:RadComboBox x:Name="cbCostureira"
+                                     ItemsSource="{Binding ListaCostureira, ElementName=ucPedidoCostureira}"
+                                     SelectedValuePath="cd_Costureira"
+                                     DisplayMemberPath="nm_Costureira"
+                                     VerticalAlignment="Top"
+                                     Margin="5"
+                                     Grid.Column="3"
+                                     SelectionChanged="cbCostureira_SelectionChanged" />
+
+            </Grid>
+
+        </GroupBox>
+
+        <GroupBox Header="Relatório"
+                  BorderBrush="#25a0da"
+                  Margin="10 0 10 10"
+                  Style="{StaticResource EstiloGroupBox}"
+                  Grid.Row="1">
+
+            <WindowsFormsHost x:Name="winFormsHost"
+                              Grid.Row="0">
+
+                <wfr:ReportViewer Margin="10,10,10,10"
+                                  x:Name="rptViewer"
+                                  ProcessingMode="Local" />
+            </WindowsFormsHost>
+
+        </GroupBox>
+
+    </Grid>
+
+</telerik:RadWindow>

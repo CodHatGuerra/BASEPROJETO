@@ -1,0 +1,36 @@
+﻿<telerik:RadWindow x:Class="NaMidia.UI.OpcoesExportacaoUI"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   telerik:StyleManager.Theme="Vista"
+                   Header="Opções de Exportação"
+                   Width="Auto"
+                   Height="Auto"
+                   WindowStartupLocation="CenterScreen"
+                   ResizeMode="NoResize"
+                   x:Name="ucOpcoesExportacao">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <telerik:RadButton x:Name="btnExportarTudoExcel"
+                           Content="Exportar tudo para Excel"
+                           telerik:StyleManager.Theme="Summer"
+                           Height="22"
+                           Width="180"
+                           Margin="10"
+                           Grid.Row="0"
+                           Click="btnExportarTudoExcel_Click" />
+
+        <telerik:RadButton x:Name="btnExportarSelecionado"
+                           Content="Exportar Item Selecionado"
+                           Height="22"
+                           Width="180"
+                           Margin="10"
+                           Grid.Row="1"
+                           telerik:StyleManager.Theme="Summer"
+                           Click="btnExportarSelecionado_Click" />
+    </Grid>
+</telerik:RadWindow >

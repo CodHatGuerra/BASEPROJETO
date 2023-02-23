@@ -1,0 +1,543 @@
+﻿<UserControl x:Class="NaMidia.UI.PagamentoCostureiraUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             xmlns:local="clr-namespace:NaMidia.Classes"
+             x:Name="ucPagamentoCostureira">
+
+    <ScrollViewer VerticalScrollBarVisibility="Disabled"
+                  HorizontalScrollBarVisibility="Disabled">
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Border Background="#25a0da"
+                    BorderBrush="#ff0078ab"
+                    BorderThickness="1"
+                    VerticalAlignment="Top"
+                    Margin="10 5 10 5"
+                    Grid.Row="0">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Pagamento de Costureiras"
+                           FontSize="18"
+                           FontFamily="Calibri"
+                           FontWeight="ExtraLight"
+                           FontStyle="Italic"
+                           Foreground="#ffffff"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Left"
+                           Margin="5 3 0 3"
+                           Grid.Column="0" />
+                </Grid>
+
+            </Border>
+
+            <GroupBox Header="Informações"
+                      BorderBrush="#25a0da"
+                      Margin="10 0 10 0"
+                      Style="{StaticResource EstiloGroupBox}"
+                      Grid.Row="1">
+
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Costureira:"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Margin="2"
+                           Grid.Column="0" />
+
+                    <telerik:RadComboBox x:Name="cbCostureira"
+                                         ItemsSource="{Binding ListaCostureira, ElementName=ucPagamentoCostureira}"
+                                         SelectedValuePath="cd_Costureira"
+                                         DisplayMemberPath="nm_Costureira"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Left"
+                                         Height="22"
+                                         Width="300"
+                                         Margin="5"
+                                         Grid.Column="1" />
+
+                    <Label Content="De:"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Margin="2"
+                           Grid.Column="2" />
+
+                    <telerik:RadDatePicker x:Name="dpPagamento"
+                                           InputMode="DatePicker"
+                                           DateSelectionMode="Day"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5"
+                                           Height="22"
+                                           Width="150"
+                                           Grid.Column="3" />
+
+                    <Label Content="Até:"
+                           VerticalAlignment="Top"
+                           HorizontalAlignment="Left"
+                           Margin="2"
+                           Grid.Column="4" />
+
+                    <telerik:RadDatePicker x:Name="dpPagamentoFim"
+                                           InputMode="DatePicker"
+                                           DateSelectionMode="Day"
+                                           VerticalAlignment="Top"
+                                           HorizontalAlignment="Left"
+                                           Margin="5"
+                                           Height="22"
+                                           Width="150"
+                                           Grid.Column="5" />
+
+                    <telerik:RadButton x:Name="btnPesquisarCliente"
+                                       ToolTip="Clique para pesquisar"
+                                       Height="22"
+                                       Width="85"
+                                       Margin=" 0 0 5 0"
+                                       IsEnabled="True"
+                                       Grid.Column="6"
+                                       Click="btnOk_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="/Imagens/pesquisa_icone.png"
+                                   Margin="5 0 5 0"
+                                   Width="12" />
+                            <TextBlock>Pesquisar</TextBlock>
+                        </StackPanel>
+                    </telerik:RadButton>
+
+                </Grid>
+
+            </GroupBox>
+
+            <GroupBox x:Name="gbCadastrados"
+                      Header="Pedidos Cadastrados"
+                      BorderBrush="#25a0da"
+                      Margin="10 0 10 10"
+                      Style="{StaticResource EstiloGroupBox}"
+                      Grid.Row="2">
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition x:Name="rGridView"
+                                       Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+
+                    <telerik:RadDataPager PageSize="{Binding LinhasGridView, ElementName= ucPagamentoCostureira}"
+                                          Margin="5,2,45,0"
+                                          Grid.Row="0"
+                                          Grid.Column="0"
+                                          Source="{Binding Items, ElementName=dtPagamentoCostureira}"
+                                          IsTotalItemCountFixed="True"
+                                          DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                          telerik:StyleManager.Theme="Windows8" />
+
+                    <Button x:Name="btnExportarPedido"
+                            ToolTip="Clique para exportar"
+                            Style="{DynamicResource botaoExportar}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Margin="5 2 5 2"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Click="btnExportarPedido_Click" />
+
+                    <Border Background="#e5ebf3"
+                            BorderThickness="1"
+                            Grid.Row="1"
+                            Grid.Column="0">
+
+                        <telerik:RadGridView x:Name="dtPagamentoCostureira"
+                                             IsReadOnly="false"
+                                             Margin="5 2 5 5"
+                                             Grid.Row="1"
+                                             Grid.Column="0"
+                                             AutoGenerateColumns="False"
+                                             ItemsSource="{Binding ListaCostureiraPedido, ElementName=ucPagamentoCostureira}"
+                                             Style="{DynamicResource EstiloGrid}"
+                                             MouseRightButtonUp="dtPagamentoCostureira_MouseRightButtonUp"
+                                             telerik:StyleManager.Theme="Windows8">
+
+                            <telerik:RadContextMenu.ContextMenu>
+                                <telerik:RadContextMenu>
+                                    <telerik:RadContextMenu.Items>
+                                        <telerik:RadMenuItem Header="Excluir pagamento"
+                                                             Click="RadMenuItem_Click"
+                                                             x:Name="rmExcluirPagamento">
+                                            <telerik:RadMenuItem.Icon>
+                                                <Image Source="/imagens/excluirContext_icone.png"
+                                                       Width="12"
+                                                       Height="12" />
+                                            </telerik:RadMenuItem.Icon>
+                                        </telerik:RadMenuItem>
+                                    </telerik:RadContextMenu.Items>
+                                </telerik:RadContextMenu>
+                            </telerik:RadContextMenu.ContextMenu>
+
+                            <telerik:RadGridView.Resources>
+                                <local:CostureiraConverter x:Key="Conversor" />
+                            </telerik:RadGridView.Resources>
+
+                            <telerik:RadGridView.GroupDescriptors>
+                                <telerik:GroupDescriptor Member="ITENSVENDA.VENDA.PESSOA.nm_Fantasia"
+                                                         SortDirection="Ascending"
+                                                         DisplayContent="Cliente" />
+                            </telerik:RadGridView.GroupDescriptors>
+                            <telerik:RadGridView.Columns>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            UniqueName="colunaSituacao">
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox  Width="15"
+                                                      Height="15"
+                                                      Background="{Binding Converter={StaticResource Conversor},ConverterParameter=Imagem}">
+                                            </TextBox>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Data"
+                                                            DataMemberBinding="{Binding ds_Data,StringFormat={}{0:dd/MM/yyyy}}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Cliente"
+                                                            DataMemberBinding="{Binding ITENSVENDA.VENDA.PESSOA.nm_Fantasia}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Código da Venda"
+                                                            DataMemberBinding="{Binding ITENSVENDA.cd_Venda}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Quantidade"
+                                                            DataMemberBinding="{Binding ds_Quantidade, Mode=TwoWay}"
+                                                            IsReadOnly="True">
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Produto"
+                                                            DataMemberBinding="{Binding ITENSVENDA.PRODUTO.ds_Produto}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Tamanho"
+                                                            DataMemberBinding="{Binding ITENSVENDA.TAMANHO.ds_Tamanho}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Observação"
+                                                            DataMemberBinding="{Binding ITENSVENDA.ds_Observacoes}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Malha"
+                                                            DataMemberBinding="{Binding ITENSVENDA.MALHA. ds_Malha}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Gola"
+                                                            DataMemberBinding="{Binding ITENSVENDA.GOLA.ds_Gola}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Valor Unitário"
+                                                            DataMemberBinding="{Binding ds_ValorUnit,StringFormat='R$ ##,##0.00'}"
+                                                            IsReadOnly="True">
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Valor Total"
+                                                            DataMemberBinding="{Binding ds_ValorTotal,StringFormat='R$ ##,##0.00'}"
+                                                            IsReadOnly="True">
+                                </telerik:GridViewDataColumn>
+
+                            </telerik:RadGridView.Columns>
+
+                        </telerik:RadGridView >
+                    </Border>
+
+                    <StackPanel Grid.Column="1"
+                                Grid.Row="2"
+                                VerticalAlignment="Center">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Button x:Name="btnAdd"
+                                    ToolTip="Clique para adicionar"
+                                    Style="{DynamicResource botaoAdicionar}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Margin="5 2 5 2"
+                                    Grid.Row="0"
+                                    Click="btnAdd_Click" />
+
+                            <Button x:Name="btnRemover"
+                                    ToolTip="Clique para remover"
+                                    Style="{DynamicResource botaoRemover}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Right"
+                                    Margin="5 2 5 2"
+                                    Grid.Row="1"
+                                    Click="btnRemover_Click" />
+
+                        </Grid>
+                    </StackPanel>
+
+                    <telerik:RadDataPager PageSize="{Binding LinhasGridView, ElementName= ucPagamentoCostureira}"
+                                          Margin="5,2,45,0"
+                                          Grid.Row="0"
+                                          Grid.Column="2"
+                                          Source="{Binding Items, ElementName=dtPagamentoCostureiraPagamento}"
+                                          IsTotalItemCountFixed="True"
+                                          DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                          telerik:StyleManager.Theme="Windows8" />
+
+                    <Button x:Name="btnExportarPedidoPagamento"
+                            ToolTip="Clique para exportar"
+                            Style="{DynamicResource botaoExportar}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Margin="5 2 5 2"
+                            Grid.Column="2"
+                            Grid.Row="0"
+                            Click="btnExportarPedidoPagamento_Click" />
+
+                    <Border Background="#e5ebf3"
+                            BorderThickness="1"
+                            Grid.Row="1"
+                            Grid.Column="2">
+
+                        <telerik:RadGridView x:Name="dtPagamentoCostureiraPagamento"
+                                             IsReadOnly="false"
+                                             Margin="5 2 5 5"
+                                             Grid.Row="1"
+                                             Grid.Column="2"
+                                             AutoGenerateColumns="False"
+                                             ItemsSource="{Binding ListaCostureiraPedidoPagamento, ElementName=ucPagamentoCostureira}"
+                                             Style="{DynamicResource EstiloGrid}"
+                                             telerik:StyleManager.Theme="Windows8">
+
+                            <telerik:RadGridView.Resources>
+                                <local:CostureiraConverter x:Key="Conversor" />
+                            </telerik:RadGridView.Resources>
+
+                            <telerik:RadGridView.GroupDescriptors>
+                                <telerik:GroupDescriptor Member="ITENSVENDA.VENDA.PESSOA.nm_Fantasia"
+                                                         SortDirection="Ascending"
+                                                         DisplayContent="Cliente" />
+                            </telerik:RadGridView.GroupDescriptors>
+                            <telerik:RadGridView.Columns>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            UniqueName="colunaSituacao">
+                                    <telerik:GridViewDataColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBox  Width="15"
+                                                      Height="15"
+                                                      Background="{Binding Converter={StaticResource Conversor},ConverterParameter=Imagem}">
+                                            </TextBox>
+                                        </DataTemplate>
+                                    </telerik:GridViewDataColumn.CellTemplate>
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Data"
+                                                            DataMemberBinding="{Binding ds_Data,StringFormat={}{0:dd/MM/yyyy}}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Cliente"
+                                                            DataMemberBinding="{Binding ITENSVENDA.VENDA.PESSOA.nm_Fantasia}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Código da Venda"
+                                                            DataMemberBinding="{Binding ITENSVENDA.cd_Venda}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Quantidade"
+                                                            DataMemberBinding="{Binding ds_Quantidade, Mode=TwoWay}"
+                                                            IsReadOnly="True">
+                                </telerik:GridViewDataColumn>
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Produto"
+                                                            DataMemberBinding="{Binding ITENSVENDA.PRODUTO.ds_Produto}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Tamanho"
+                                                            DataMemberBinding="{Binding ITENSVENDA.TAMANHO.ds_Tamanho}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Observação"
+                                                            DataMemberBinding="{Binding ITENSVENDA.ds_Observacoes}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Malha"
+                                                            DataMemberBinding="{Binding ITENSVENDA.MALHA. ds_Malha}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Gola"
+                                                            DataMemberBinding="{Binding ITENSVENDA.GOLA.ds_Gola}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Valor Unitário"
+                                                            DataMemberBinding="{Binding ds_ValorUnit,StringFormat='R$ ##,##0.00'}"
+                                                            IsReadOnly="True" />
+
+                                <telerik:GridViewDataColumn Width="Auto"
+                                                            Header="Valor Total"
+                                                            DataMemberBinding="{Binding ds_ValorTotal,StringFormat='R$ ##,##0.00'}"
+                                                            IsReadOnly="True">
+                                </telerik:GridViewDataColumn>
+
+                            </telerik:RadGridView.Columns>
+
+                        </telerik:RadGridView >
+
+                    </Border>
+
+                </Grid>
+
+            </GroupBox>
+
+            <Grid Grid.Row="3" HorizontalAlignment="Left">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBox Grid.Row="1"
+                         Margin="10,5,0,5"
+                         Background="Green"
+                         Width="15"
+                         Height="15"
+                         Grid.Column="2" />
+
+                <Label Content="Pago"
+                       Grid.Column="3"
+                       VerticalAlignment="Center" />
+
+                <TextBox Grid.Row="1"
+                         Background="red"
+                         Margin="30,5,0,5"
+                         Width="15"
+                         Height="15"
+                         Grid.Column="4" />
+
+                <Label Content="Pendente"
+                       Grid.Column="5"
+                       VerticalAlignment="Center" />
+            </Grid>
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Right"
+                        Margin="10"
+                        Grid.Column="1"
+                        Grid.Row="3">
+                <telerik:RadButton x:Name="btnSalvar"
+                                   ToolTip="Clique para salvar"
+                                   Width="95"
+                                   Height="30"
+                                   Margin=" 0 0 5 0"
+                                   HorizontalContentAlignment="Stretch"
+                                   Click="btnEfetuarPagamento_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="15"
+                              Height="12"
+                              Margin="12 0 7 0"
+                              HorizontalAlignment="Left"
+                              Data="M0,6 L7,10 L14,0"
+                              Stretch="Fill"
+                              Stroke="#FF67BE2E"
+                              StrokeThickness="4"
+                              UseLayoutRounding="False" />
+                        <TextBlock HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI"
+                                   Text="Salvar" />
+                    </StackPanel>
+                </telerik:RadButton>
+
+                <telerik:RadButton x:Name="btnCancelar"
+                                   ToolTip="Clique para cancelar"
+                                   Width="95"
+                                   Height="30"
+                                   Margin="5 0 0 0"
+                                   HorizontalContentAlignment="Stretch"
+                                   Click="btnCancelar_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Width="14"
+                              Height="14"
+                              Margin="10 0 7 0"
+                              Data="M5.5,0 L9.5,0 L9.5,5.5 L15,5.5 L15,9.5 L9.5,9.5 L9.5,15 L5.5,15 L5.5,9.5 L0,9.5 L0,5.5 L5.5,5.5 z"
+                              Fill="#FFEB2020"
+                              RenderTransformOrigin="0.5,0.5"
+                              Stretch="Fill"
+                              StrokeThickness="0"
+                              UseLayoutRounding="False">
+                            <Path.RenderTransform>
+                                <RotateTransform Angle="-45" />
+                            </Path.RenderTransform>
+                        </Path>
+                        <TextBlock HorizontalAlignment="Right"
+                                   FontFamily="Segoe UI"
+                                   Text="Cancelar" />
+                    </StackPanel>
+                </telerik:RadButton>
+            </StackPanel>
+
+        </Grid>
+
+    </ScrollViewer>
+
+</UserControl>

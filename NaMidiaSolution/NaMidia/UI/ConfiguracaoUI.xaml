@@ -1,0 +1,186 @@
+﻿<telerik:RadWindow x:Class="NaMidia.UI.ConfiguracaoUI"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                   telerik:StyleManager.Theme="Vista"
+                   WindowStartupLocation="CenterScreen"
+                   Header="Configurações"
+                   Width="600"
+                   Height="500"
+                   x:Name="wndConfiguracao">
+    <Grid>
+        <telerik:RadBusyIndicator x:Name="rdAguarde"
+                                  BusyContent="Carregando..."
+                                  IsBusy="False"
+                                  Grid.Row="1"
+                                  telerik:StyleManager.Theme="Windows8">
+
+            <Grid>
+                <telerik:RadTabControl Name="tcLogs"
+                                       TabOrientation="Horizontal"
+                                       telerik:StyleManager.Theme="Windows8"
+                                       SelectionChanged="tcLogs_SelectionChanged">
+
+                    <telerik:RadTabItem Name="tiPagamento"
+                                        Header="Pagamento"
+                                        Width="Auto"
+                                        telerik:StyleManager.Theme="Windows8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition x:Name="rGridViewPagamentos"
+                                               Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <telerik:RadDataPager PageSize="15"
+                                                  Margin="5 2 5 0"
+                                                  Grid.Row="0"
+                                                  Grid.Column="0"
+                                                  Source="{Binding Items, ElementName=dtLogsPagamento}"
+                                                  IsTotalItemCountFixed="True"
+                                                  DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                                  telerik:StyleManager.Theme="Windows8" />
+
+                            <Button x:Name="btnImprimirPagamento"
+                                    ToolTip="Clique para exportar para Excel"
+                                    IsEnabled="True"
+                                    Click="btnImprimirPagamento_Click"
+                                    Style="{DynamicResource botaoExportarExcel}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="5 2 5 2"
+                                    Grid.Column="1"
+                                    Grid.Row="0" />
+
+                            <telerik:RadGridView x:Name="dtLogsPagamento"
+                                                 IsReadOnly="True"
+                                                 Margin="5 2 5 5"
+                                                 Grid.Row="1"
+                                                 ShowColumnFooters="True"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="2"
+                                                 CanUserDeleteRows="False"
+                                                 ItemsSource="{Binding ListaViewLogPagamentoVenda, ElementName=wndConfiguracao}"
+                                                 AutoGenerateColumns="False"
+                                                 Style="{DynamicResource EstiloGrid}"
+                                                 telerik:StyleManager.Theme="Windows8">
+
+                                <telerik:RadGridView.Columns>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Cd Pagamento"
+                                                                DataMemberBinding="{Binding cd_PagamentoVenda}">
+                                    </telerik:GridViewDataColumn>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Operação"
+                                                                DataMemberBinding="{Binding ds_Operacao}" />
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Valor Antigo"
+                                                                DataMemberBinding="{Binding ds_Valor_Antigo,StringFormat='R$ ##,##0.00'}" />
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Valor Atual"
+                                                                DataMemberBinding="{Binding ds_Valor_Atual,StringFormat='R$ ##,##0.00'}">
+                                    </telerik:GridViewDataColumn>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Funcionário"
+                                                                DataMemberBinding="{Binding nm_Funcionario}">
+                                    </telerik:GridViewDataColumn>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Data"
+                                                                DataMemberBinding="{Binding dt_Edicao,StringFormat={}\{0:dd/MM/yyyy\}}">
+                                    </telerik:GridViewDataColumn>
+                                </telerik:RadGridView.Columns>
+
+                            </telerik:RadGridView >
+                        </Grid>
+                    </telerik:RadTabItem>
+
+                    <telerik:RadTabItem Name="tiVendas"
+                                        Header="Venda"
+                                        Width="Auto"
+                                        telerik:StyleManager.Theme="Windows8">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition x:Name="rGridViewVenda"
+                                               Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <telerik:RadDataPager PageSize="15"
+                                                  Margin="5 2 5 0"
+                                                  Grid.Row="0"
+                                                  Grid.Column="0"
+                                                  Source="{Binding Items, ElementName=dtLogsVenda}"
+                                                  IsTotalItemCountFixed="True"
+                                                  DisplayMode="FirstLastPreviousNextNumeric, Text"
+                                                  telerik:StyleManager.Theme="Windows8" />
+
+                            <Button x:Name="btnImprimirVenda"
+                                    ToolTip="Clique para exportar para Excel"
+                                    IsEnabled="True"
+                                    Style="{DynamicResource botaoExportarExcel}"
+                                    VerticalAlignment="Center"
+                                    HorizontalAlignment="Center"
+                                    Margin="5 2 5 2"
+                                    Grid.Column="1"
+                                    Grid.Row="0"
+                                    Click="btnImprimirVenda_Click" />
+
+                            <telerik:RadGridView x:Name="dtLogsVenda"
+                                                 IsReadOnly="True"
+                                                 Margin="5 2 5 5"
+                                                 Grid.Row="1"
+                                                 ShowColumnFooters="True"
+                                                 Grid.Column="0"
+                                                 Grid.ColumnSpan="2"
+                                                 CanUserDeleteRows="False"
+                                                 ItemsSource="{Binding ListaViewLogVenda, ElementName=wndConfiguracao}"
+                                                 AutoGenerateColumns="False"
+                                                 Style="{DynamicResource EstiloGrid}"
+                                                 telerik:StyleManager.Theme="Windows8">
+
+                                <telerik:RadGridView.Columns>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Cd Venda"
+                                                                DataMemberBinding="{Binding cd_Venda}">
+                                    </telerik:GridViewDataColumn>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Tipo Alteração"
+                                                                DataMemberBinding="{Binding ds_Operacao}" />
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Usuário"
+                                                                DataMemberBinding="{Binding nm_Funcionario}">
+                                    </telerik:GridViewDataColumn>
+
+                                    <telerik:GridViewDataColumn Width="Auto"
+                                                                Header="Data Alteração"
+                                                                DataMemberBinding="{Binding dt_Edicao, StringFormat={}\{0:dd/MM/yyyy\}}" />
+
+                                </telerik:RadGridView.Columns>
+
+                            </telerik:RadGridView >
+                        </Grid>
+                    </telerik:RadTabItem>
+                </telerik:RadTabControl>
+            </Grid>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</telerik:RadWindow>
